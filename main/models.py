@@ -13,7 +13,7 @@ class Product(models.Model):
 ]
     name = models.CharField(max_length=100)
     price = models.IntegerField(null=False, blank=False)
-    image = models.ImageField(upload_to ='media/products')
+    image = models.ImageField(upload_to ='products/')
     category = models.CharField(choices=Category_choices, max_length=50)
 
     def __str__(self) -> str:
