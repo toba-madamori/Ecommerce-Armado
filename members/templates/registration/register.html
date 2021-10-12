@@ -3,33 +3,28 @@
 
 
 {% block content %}
-<div class="cart-table-area section-padding-100">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-lg-8">
-                <div class="checkout_details_area mt-50 clearfix">
+        <div class="cart-table-area section-padding-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="checkout_details_area mt-50 clearfix">
 
-                    <div class="cart-title">
-                        <h1> Registration </h1>
-                        <br>
+                            <div class="cart-title">
+                                <h1> Registration </h1>
+                                <br>
 
-                        <form method="POST">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button> Register </button>
-                                
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <button> Register </button>
+                                        
 
-                        </form>    
+                                </form>    
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>            
-
-   
-
-
-
-
+        </div>   
+    </div>             
 {% endblock %}

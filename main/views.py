@@ -9,8 +9,17 @@ class IndexView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         products = Product.objects.all()
         context = {
-            'products':products
+            'products':products,
         }
 
         return render(request, 'main/index.html', context)
 
+
+class ShopView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.all()
+        context = {
+            'products': products,
+        }
+
+        return render(request, 'main/shop.html', context)

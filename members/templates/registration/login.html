@@ -3,6 +3,7 @@
 
 
 {% block content %}
+        
         <div class="cart-table-area section-padding-100">
             <div class="container-fluid">
                 <div class="row">
@@ -16,16 +17,16 @@
                                     {% csrf_token %}
                                     
                                     <div>
-                                        <input type="text" name="username" placeholder="Username">
+                                        <input class="form-control" type="text" name="username" placeholder="Username">
                                     </div>
                                     <br>
                                     <div>
-                                        <input type="password" name="password" placeholder="Password">
+                                        <input class="form-control" type="password" name="password" placeholder="Password">
                                         <br/>
                                         <small> <div id="emailHelp" class="form-text">Not Registered? Sign Up <a href="{% url 'register' %}">Here.</a></div></small>
                                     </div>
                                     <br/>
-                                    <button> Login </button>
+                                    <button class="btn btn-light"> Login </button>
                                     
                                 </form>    
                             </div>
@@ -33,6 +34,7 @@
                     </div>
                 </div>
             </div>
-        </div>            
+        </div>
+    </div>                
 
 {% endblock content %}
