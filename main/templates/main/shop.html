@@ -105,7 +105,7 @@
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
                             <div class="total-products">
-                                <p>Showing 1-6 0f 25</p>
+                                <p>Showing 1-{{ page_obj.object_list.count }} 0f {{ paginator.count }}</p>
                                 <div class="view d-flex">
                                     <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                                     <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -119,7 +119,7 @@
                 <div class="row">
 
                     <!-- Single Product Area -->
-                    {% for product in products %}
+                    {% for product in page_obj %}
                     <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
@@ -147,7 +147,7 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <div class="cart">
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
+                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="bi bi-cart-plus" style="font-size: 2rem; color: black;"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -162,10 +162,13 @@
                         <!-- Pagination -->
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
+                                {% if page_obj.has_previous %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">prev</a></li>
+                                {% endif %}
+                                
+                                {% if page_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+                                {% endif %}
                             </ul>
                         </nav>
                     </div>
