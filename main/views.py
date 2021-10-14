@@ -26,9 +26,29 @@ class ShopView(View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
+        prod = Product().categories
+        
         context = {
             'page_obj': page_obj,
             'paginator': paginator,
+            'categories': prod,
         }
 
         return render(request, 'main/shop.html', context)
+
+class CategoryView(View):
+    def get(self, request, cat, *args, **kwargs):
+        products = Product.objects.filter(category=cat)
+
+        paginator = Paginator(products, 6)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        prod = Product().categories
+
+        context= {
+            'page_obj': page_obj,
+            'paginator': paginator,
+            'categories': prod,
+        }
+        return render(request, 'main/category.html', context)        

@@ -19,6 +19,13 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    def categories(self):
+        cat = self.Category_choices
+        cat2 = []
+        for choices in cat:
+            cat2.append(choices[-1])
+        return  cat2   
+
 class Cart(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
