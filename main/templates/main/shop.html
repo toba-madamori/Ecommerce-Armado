@@ -59,9 +59,9 @@
                                 <div class="product-meta-data">
                                     <div class="line"></div>
                                     <p class="product-price">${{ product.price }}</p>
-                                    <a href="product-details.html">
-                                        <h6>{{ product.name }}</h6>
-                                    </a>
+                                    
+                                    <h6>{{ product.name }}</h6>
+                                   
                                 </div>
                                 <!-- Ratings & Cart -->
                                 <div class="ratings-cart text-right">
@@ -73,7 +73,7 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <div class="cart">
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="bi bi-cart-plus" style="font-size: 2rem; color: black;"></i></a>
+                                        <a href="{% url 'product_detail' product.pk %}" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i class="bi bi-cart-plus" style="font-size: 2rem; color: black;"></i></a>
                                     </div>
                                 </div>
                             </div>

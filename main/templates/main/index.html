@@ -8,7 +8,7 @@
                 {% for product in products %}
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="{% url 'shop' %}">
+                    <a href="{% url 'product_detail' product.pk %}">
                         <img src="{{ product.image.url }}" alt="The products image">
                         <!-- Hover Content -->
                         <div class="hover-content">

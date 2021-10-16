@@ -57,7 +57,7 @@
         <div class="mobile-nav">
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="{% static 'main/img/core-img/logo.png' %}" alt=""></a>
+                <a href="{% url 'index' %}"><img src="{% static 'main/img/core-img/logo.png' %}" alt=""></a>
             </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
@@ -73,7 +73,7 @@
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="index.html"><img src="{% static 'main/img/core-img/logo.png' %}" alt=""></a>
+                <a href="{% url 'index' %}"><img src="{% static 'main/img/core-img/logo.png' %}" alt=""></a>
             </div>
             <div>
                 {% if user.is_authenticated %}
@@ -88,9 +88,8 @@
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'index' %}">Home</a></li>
                     <li><a href="{% url 'shop' %}">Shop</a></li>
-                    <li><a href="product-details.html">Product</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="checkout.html">Checkout</a></li>
                     {% endif %}
@@ -98,7 +97,7 @@
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-                <a href="#" class="btn amado-btn active">New this week</a>
+                <a href="#" class="btn btn-secondary">New this week</a>
             </div>
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
