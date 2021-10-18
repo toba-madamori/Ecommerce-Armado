@@ -163,3 +163,25 @@ class RemoveFromCartFromCartPage(View):
         else:
             product.delete()
         return redirect('cart')
+
+class CheckoutView(View):
+    def get(self, request, *args, **kwargs):
+        cart_objects = Cart.objects.filter(user = request.user)
+        total_no_of_products = cart_objects.count()
+
+        subtotal = []
+        for objects in cart_objects:
+            subtotal.append(objects.sub_total)
+
+        subtotal2 = sum(subtotal)
+        delivery_fee = 0                 # Just equal to zero for now....
+        total = subtotal2 + delivery_fee   
+        
+        context={
+            'total_no_of_products': total_no_of_products,
+            'total': total,
+            'subtotal2': subtotal2,
+            'delivery_fee': delivery_fee,
+        }
+
+        return render(request, 'main/checkout.html', context)
