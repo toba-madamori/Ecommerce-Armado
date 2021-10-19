@@ -3,6 +3,11 @@
 {% block content %}
         <!-- Product Catagories Area Start -->
         <div class="products-catagories-area clearfix">
+            {% for message in  messages %}
+                    <strong>{{ message }}</strong>
+            {% endfor %}    
+            <br>
+            <hr>
             <div class="amado-pro-catagory clearfix">
 
                 {% for product in products %}

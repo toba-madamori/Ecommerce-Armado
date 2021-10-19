@@ -8,7 +8,7 @@ from .models import Product, Cart
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from .forms import AddToCartForm
-from django.db.models import QuerySet
+from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
 
 # Create your views here.
@@ -185,3 +185,21 @@ class CheckoutView(View):
         }
 
         return render(request, 'main/checkout.html', context)
+
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('query')
+        products = Product.objects.filter(name__icontains= query)
+
+        prod = Product().categories
+
+        if products:
+
+            context = {
+                'products': products,
+                'categories': prod,
+            }
+            return render(request, 'main/search.html', context)
+        else:
+            messages.info(request, 'This product is not available now, please check on a later date, thank you.')
+            return redirect('index')
