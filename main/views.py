@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import Product, Cart
+from .models import Product, Cart, Favorites
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from .forms import AddToCartForm
+from .forms import AddToCartForm, AddToFavortitesForm
 from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
 
@@ -203,3 +203,30 @@ class SearchView(View):
         else:
             messages.info(request, 'This product is not available now, please check on a later date, thank you.')
             return redirect('index')
+
+class FavoritesView(LoginRequiredMixin,View):
+    redirect_field_name = 'redirect_to'
+    def post(self, request, pk, *args, **kwargs):
+        form = AddToFavortitesForm(request.POST)
+
+        if form.is_valid:
+            favorites_data = form.save(commit=False)
+            favorites_data.user = request.user
+            favorites_data.product = Product.objects.get(id=pk)
+            favorites_data.save()
+
+        return redirect('shop')
+
+
+class FavoritesPageView(View):
+    def get(self, request, *args, **kwargs):
+        favorites = Favorites.objects.filter(user = request.user)
+
+        cart_objects = Cart.objects.filter(user = request.user)
+        total_no_of_products = cart_objects.count()
+
+        context = {
+            'favorites': favorites,
+            'total_no_of_products': total_no_of_products,
+        }
+        return render(request, 'main/favorites.html', context)

@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% block title %} Favorites.. {% endblock title %}
+{% block content %}
+        <!-- Product Catagories Area Start -->
+        <div class="products-catagories-area clearfix">
+            <p>Your favorite products will appear here.</p>
+            <br>
+            <hr>
+            <div class="amado-pro-catagory clearfix">
+
+                {% for favorite in favorites %}
+                <!-- Single Catagory -->
+                <div class="single-products-catagory clearfix">
+                    <a href="{% url 'product_detail' favorite.product.pk %}">
+                        <img src="{{ favorite.product.image.url }}" alt="The products image">
+                        <!-- Hover Content -->
+                        <div class="hover-content">
+                            <div class="line"></div>
+                            <p>From ${{ favorite.product.price }}</p>
+                            <h4>{{ favorite.product.name }}</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="cart">
+                    <a href="#" data-toggle="tooltip" data-placement="left" title="Remove from favorites"><i class="bi bi-trash" style="font-size: 2rem; color: black;"></i></a>
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+        <!-- Product Catagories Area End -->
+    </div>
+    <!-- ##### Main Content Wrapper End ##### -->
+
+{% endblock content %}    
