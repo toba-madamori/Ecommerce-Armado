@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import Product, Cart, Favorites
+from .models import Product, Cart, Favorites, WebsiteReview
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from .forms import AddToCartForm, AddToFavortitesForm
+from .forms import AddToCartForm, AddToFavortitesForm, WebsiteReviewForm
 from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
 
@@ -177,11 +177,14 @@ class CheckoutView(View):
         delivery_fee = 0                 # Just equal to zero for now....
         total = subtotal2 + delivery_fee   
         
+        form = WebsiteReviewForm()
+
         context={
             'total_no_of_products': total_no_of_products,
             'total': total,
             'subtotal2': subtotal2,
             'delivery_fee': delivery_fee,
+            'form': form,
         }
 
         return render(request, 'main/checkout.html', context)
@@ -230,3 +233,32 @@ class FavoritesPageView(View):
             'total_no_of_products': total_no_of_products,
         }
         return render(request, 'main/favorites.html', context)
+
+class WebsiteReviewView(View):
+    def post(self, request, *args, **kwargs):
+        form = WebsiteReviewForm(request.POST)
+
+        if form.is_valid:
+            review_data = form.save(commit=False)
+            review_data.user = request.user
+            review_data.save()
+
+        messages.info(request, 'Thank you for the feedback.')
+
+        return redirect('checkout')
+
+class WebsiteReviewPage(View):
+    def get(self, request, *args, **kwargs):
+        reviews = WebsiteReview.objects.all()
+
+        if not request.user.is_authenticated:
+             total_no_of_products = 0
+        else:
+            cart_objects = Cart.objects.filter(user = request.user)
+            total_no_of_products = cart_objects.count()
+
+        context = {
+            'reviews': reviews,
+            'total_no_of_products': total_no_of_products, 
+        }
+        return render(request, 'main/website-review.html', context)

@@ -10,17 +10,20 @@
                 <div class="row">
                     <div class="col-12 col-lg-8">
                         <div class="checkout_details_area mt-50 clearfix">
+                            {% for message in  messages %}
+                                {{ message }}
+                                <br>
+                                <hr>
+                            {% endfor %}    
 
                             <div class="cart-title">
                                 <h2>Checkout</h2>
                             </div>
 
-                            <form action="#" method="post">
-                                <div class="row">
-                                    <div class="col-12 mb-3">
-                                        <textarea name="comment" class="form-control w-100" id="comment" cols="30" rows="30" placeholder="Leave a comment about your experience for better feedback"></textarea>
-                                    </div>
-                                </div>
+                            <form action="{% url 'review' %}" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-secondary">Submit Review</button>
                             </form>
                         </div>
                     </div>

@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Review Page {% endblock title %}
+
+{% block content %}
+
+        <div class="cart-table-area section-padding-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-title">
+                                <h1>Our Customer Reviews</h1>
+                                <br>
+                                <ul>
+                                    {% for review in reviews %}
+                                        <li><strong>{{review.user.username}}  {{review.date}}<br/></strong>
+                                            
+                                            <p>{{ review.review }}</p>
+                                        </li>
+                                    {%  endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+
+{% endblock content %}
