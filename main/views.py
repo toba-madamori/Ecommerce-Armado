@@ -10,8 +10,7 @@ from django.core.paginator import Paginator
 from .forms import AddToCartForm, AddToFavortitesForm, WebsiteReviewForm
 from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
-
-# Create your views here.
+from datetime import date, timedelta
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
@@ -262,3 +261,22 @@ class WebsiteReviewPage(View):
             'total_no_of_products': total_no_of_products, 
         }
         return render(request, 'main/website-review.html', context)
+
+class NewThisWeekView(View):
+    startdate = date.today()
+    enddate = startdate - timedelta(days=6)
+
+    def get(self, request, *args, **kwargs):
+        products_this_week = Product.objects.filter(date__range=[self.startdate, self.enddate])
+
+        if not request.user.is_authenticated:
+             total_no_of_products = 0
+        else:
+            cart_objects = Cart.objects.filter(user = request.user)
+            total_no_of_products = cart_objects.count()
+
+        context = {
+            'products_this_week': products_this_week,
+            'total_no_of_products': total_no_of_products,
+        }
+        return render(request, 'main/new-this-week.html', context)

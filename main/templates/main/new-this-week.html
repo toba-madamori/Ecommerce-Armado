@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% block title %} New This Week {% endblock title %}
+{% block content %}
+        <!-- Product Catagories Area Start -->
+        <div class="products-catagories-area clearfix">
+            <p>Products added this week!!</p>
+            <br>
+            <hr>
+            <div class="amado-pro-catagory clearfix">
+
+                {% for product in products_this_week %}
+                <!-- Single Catagory -->
+                <div class="single-products-catagory clearfix">
+                    <a href="{% url 'product_detail' product.pk %}">
+                        <img src="{{ product.image.url }}" alt="The products image">
+                        <!-- Hover Content -->
+                        <div class="hover-content">
+                            <div class="line"></div>
+                            <p>From ${{ product.price }}</p>
+                            <h4>{{ product.name }}</h4>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+        <!-- Product Catagories Area End -->
+    </div>
+    <!-- ##### Main Content Wrapper End ##### -->
+
+{% endblock content %}    
