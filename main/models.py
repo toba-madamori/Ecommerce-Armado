@@ -56,3 +56,9 @@ class WebsiteReview(models.Model):
 
     def __str__(self) -> str:
         return str(self.user)
+
+class ProductReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    review = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
