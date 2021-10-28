@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm, fields, models
-from .models import Cart, Favorites, WebsiteReview
+from .models import Cart, Favorites, ProductReview, WebsiteReview
 
 class AddToCartForm(models.ModelForm):
     class Meta:
@@ -18,5 +18,14 @@ class WebsiteReviewForm(models.ModelForm):
         fields = ['review']
 
         widgets = {
-            'review': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Write your review'}), 
+            'review': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Did you like our e-shop?'}), 
+        }
+
+class ProductReviewForm(models.ModelForm):
+    class Meta:
+        model = ProductReview
+        fields = ['review']
+
+        widgets = {
+            'review': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Your thoughts on the product'}), 
         }

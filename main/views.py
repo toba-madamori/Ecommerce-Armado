@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import Product, Cart, Favorites, WebsiteReview
+from .models import Product, Cart, Favorites, ProductReview, WebsiteReview
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from .forms import AddToCartForm, AddToFavortitesForm, WebsiteReviewForm
+from .forms import AddToCartForm, AddToFavortitesForm, ProductReviewForm, WebsiteReviewForm
 from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
 from datetime import date, timedelta
@@ -280,3 +280,53 @@ class NewThisWeekView(View):
             'total_no_of_products': total_no_of_products,
         }
         return render(request, 'main/new-this-week.html', context)
+
+class ProductReviewView(View):
+    def get(self, request, pk, *args, **kwargs):
+        form = ProductReviewForm()
+
+        cart_objects = Cart.objects.filter(user = request.user)
+        total_no_of_products = cart_objects.count()
+
+        context = {
+            'form': form,
+            'total_no_of_products': total_no_of_products,
+        }
+        return render(request, 'main/product-review.html', context)
+
+
+    def post(self, request, pk, *args, **kwargs):
+        form = ProductReviewForm(request.POST)
+
+        if form.is_valid:
+            review_data = form.save(commit=False)
+            review_data.user = request.user
+            review_data.product = Product.objects.get(pk=pk)
+            form.save()
+        return redirect('index')  # or the product page
+
+class ProductReviewPage(View):
+    def get(self, request, pk,  *args, **kwargs):
+        product_reviews = ProductReview.objects.filter(product_id=pk)
+
+        if not request.user.is_authenticated:
+             total_no_of_products = 0
+        else:
+            cart_objects = Cart.objects.filter(user = request.user)
+            total_no_of_products = cart_objects.count()
+            
+        if product_reviews.count() > 0:
+            context = {
+                'product_reviews': product_reviews,
+                'total_no_of_products': total_no_of_products, 
+            }
+            return render(request, 'main/product-reviews-page.html', context)
+        
+        message = messages.info(request, 'No reviews yet, be the first to review the product.')
+        context = {
+            'message': message,
+            'total_no_of_products': total_no_of_products, 
+        }
+        return render(request, 'main/product-reviews-page.html', context)
+        
+

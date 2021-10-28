@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Product Review Form {% endblock title %}
+
+{% block content %}
+        <div class="cart-table-area section-padding-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-title">
+                                <p>Is there anything you'd like future buyer's of the product to know about
+                                    or you have something you feel the producers should know about, please feel free
+                                    to submit it here.
+                                </p>
+                                <br>
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <br>
+                                    <button type="submit" class="btn btn-secondary">Submit</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+
+{% endblock content %}

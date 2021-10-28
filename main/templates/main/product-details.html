@@ -49,8 +49,13 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
+                                    {% if user.is_authenticated %}
                                     <div class="review">
-                                        <a href="#">Write A Review</a>
+                                        <a href="{% url 'product_review' product.pk %}">Write A Review</a>
+                                    </div>
+                                    {% endif %}
+                                    <div class="review">
+                                        <a href="{% url 'product_review_page' product.pk %}">Reviews</a>
                                     </div>
                                 </div>
                                 
