@@ -11,6 +11,7 @@ from .forms import AddToCartForm, AddToFavortitesForm, ProductReviewForm, Websit
 from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
 from datetime import date, timedelta
+from django.core.mail import send_mail
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
@@ -330,3 +331,25 @@ class ProductReviewPage(View):
         return render(request, 'main/product-reviews-page.html', context)
         
 
+def newsletter(request):
+    if request.method == 'POST':
+        subject= 'subscription to our newsletter'
+        message= 'This user would like to subcribe to our newsletter'
+        from_email= request.POST['email']
+
+        #send mail
+        send_mail(
+            subject, # subject
+            message, # message
+            from_email, # from email
+            ['tobajamezmadamori@gmail.com'], # To email
+
+
+        )
+        messages.info(request, 'Thank you for subscribing to our newsletter, we promise not to dissapoint.')
+
+        return redirect('index')    
+
+    else:    
+        messages.info(request, 'There was an error, please try again later.')
+        return redirect('index')   
