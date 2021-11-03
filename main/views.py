@@ -342,7 +342,7 @@ def newsletter(request):
             subject, # subject
             message, # message
             from_email, # from email
-            ['tobajamezmadamori@gmail.com'], # To email
+            ['admin@gmail.com'], # To email
 
 
         )
