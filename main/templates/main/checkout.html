@@ -36,21 +36,48 @@
                                 <li><span>total:</span> <span>${{ total }}.00</span></li>
                             </ul>
 
-                            <div class="payment-method">
-                                <!-- Cash on delivery -->
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="cod" checked>
-                                    <label class="custom-control-label" for="cod">Cash on Delivery</label>
-                                </div>
-                                <!-- Paypal -->
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="paypal">
-                                    <label class="custom-control-label" for="paypal">Paypal<i class="bi bi-paypal"></i></label>
-                                </div>
-                            </div>
+                            
 
                             <div class="cart-btn mt-100">
-                                <a href="#" class="btn amado-btn w-100">Checkout</a>
+                                <div id="paypal-button-container"></div>
+
+                                    <!-- Include the PayPal JavaScript SDK -->
+                                    <script src="https://www.paypal.com/sdk/js?client-id=AY1ERAEa2lCx6MzILKeJpaMSmKYB0fxDxayfX6NImVAmhF6jsyWVWFTlyru5WE961O9fWGIDM9l3Ahde&currency=USD"></script>
+
+                                    <script>
+                                        // Render the PayPal button into #paypal-button-container
+                                        paypal.Buttons({
+
+                                            // Set up the transaction
+                                            createOrder: function(data, actions) {
+                                                return actions.order.create({
+                                                    purchase_units: [{
+                                                        amount: {
+                                                            value: '{{ total }}'
+                                                        }
+                                                    }]
+                                                });
+                                            },
+
+                                            // Finalize the transaction
+                                            onApprove: function(data, actions) {
+                                                return actions.order.capture().then(function(orderData) {
+                                                    // Successful capture! For demo purposes:
+                                                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                                                    alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                                                    // Replace the above to show a success message within this page, e.g.
+                                                    // const element = document.getElementById('paypal-button-container');
+                                                    // element.innerHTML = '';
+                                                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                                                    // Or go to another URL:  actions.redirect('thank_you.html');
+                                                });
+                                            }
+
+
+                                        }).render('#paypal-button-container');
+                                    </script>
                             </div>
                         </div>
                     </div>
@@ -59,5 +86,7 @@
         </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
+
+    
 
 {% endblock content %}
