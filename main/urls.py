@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IndexView, ShopView, CategoryView, ProductDetailView, AddToCartView, CartView, AddToCartFromCartPage, RemoveFromCartFromCartPage, CheckoutView, SearchView, FavoritesView, FavoritesPageView, WebsiteReviewView, WebsiteReviewPage, NewThisWeekView, ProductReviewView, ProductReviewPage
+from .views import IndexView, ShopView, CategoryView, ProductDetailView, AddToCartView, CartView, AddToCartFromCartPage, RemoveFromCartFromCartPage, CheckoutView, SearchView, FavoritesView, FavoritesPageView, WebsiteReviewView, WebsiteReviewPage, NewThisWeekView, ProductReviewView, ProductReviewPage, completeorder
 from .views import newsletter
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
     path('product/review/<int:pk>', ProductReviewView.as_view(), name='product_review'),
     path('product/review/page/<int:pk>', ProductReviewPage.as_view(), name='product_review_page'),
     path('newsletter', newsletter, name='newsletter'),
+    path('complete/order', completeorder, name='complete'),
 ]

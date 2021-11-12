@@ -12,6 +12,8 @@ from django.db.models import QuerySet, query
 from django.contrib.auth.models import AnonymousUser 
 from datetime import date, timedelta
 from django.core.mail import send_mail
+from django.http import JsonResponse
+import json
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
@@ -353,3 +355,8 @@ def newsletter(request):
     else:    
         messages.info(request, 'There was an error, please try again later.')
         return redirect('index')   
+
+def completeorder(request):
+    user = request.user
+    Cart.objects.filter(user=user).delete()
+    return JsonResponse('Payment completed!', safe=False)
